@@ -1,0 +1,24 @@
+services:
+  app:
+    build:
+      context: .
+    environment:
+      DATABASE: ${DATABASE}
+      USER: ${USER}
+      PASSWORD: ${PASSWORD}
+      HOST: ${HOST}
+      PORT: ${PORT}
+    depends_on:
+      - db
+    command: python scrape.py
+    restart: always
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: ${DATABASE}
+      POSTGRES_USER: ${USER}
+      POSTGRES_PASSWORD: ${PASSWORD}
+    ports:
+      - "5432:5433"
+    restart: always
